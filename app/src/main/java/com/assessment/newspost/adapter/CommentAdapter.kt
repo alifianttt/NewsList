@@ -22,6 +22,14 @@ class CommentAdapter(private var dataComment: ArrayList<CommentModel> = arrayLis
         holder.bind(dataComment[position])
     }
 
+    fun update(newList: ArrayList<CommentModel>){
+        val initSize = this.dataComment.size
+        this.dataComment.clear()
+        notifyItemRangeRemoved(0, initSize)
+        this.dataComment.addAll(newList)
+        notifyItemRangeInserted(0, this.dataComment.size)
+    }
+
     override fun getItemCount(): Int = dataComment.size
 
     class CommentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

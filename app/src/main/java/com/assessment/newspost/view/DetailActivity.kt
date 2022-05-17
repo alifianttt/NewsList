@@ -57,6 +57,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupViewModel(){
         newsViewModel = ViewModelProviders.of(this)[NewsViewModel::class.java]
+        commentAdapter = CommentAdapter(listComment.toCollection(ArrayList()))
         newsViewModel.getDetailNews(idNews)
         newsViewModel.getCommentList(idNews)
         getCommentList { list ->
@@ -79,6 +80,10 @@ class DetailActivity : AppCompatActivity() {
             startActivity(UserActivity.newIntent(this, idUser))
         }
 
+        binding.rvComment.apply {
+            adapter = commentAdapter
+            layoutManager = LinearLayoutManager(this@DetailActivity)
+        }
         binding.commentTitle.setOnClickListener {
             when(binding.rvComment.isVisible){
                 true -> {
@@ -129,12 +134,8 @@ class DetailActivity : AppCompatActivity() {
         binding.contentDetail.text = news?.body
     }
 
-    fun showListComment(listComment: List<CommentModel>){
-        commentAdapter = CommentAdapter(listComment.toCollection(ArrayList()))
-        binding.rvComment.apply {
-            adapter = commentAdapter
-            layoutManager = LinearLayoutManager(this@DetailActivity)
-        }
+    fun showListComment(listComment: ArrayList<CommentModel>){
+        commentAdapter.update(listComment)
     }
 
     private fun showLoading(show: Boolean){

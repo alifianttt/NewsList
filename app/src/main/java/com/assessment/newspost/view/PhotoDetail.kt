@@ -175,7 +175,7 @@ class PhotoDetail : AppCompatActivity() {
     private fun setPhoto(photoModel: PhotoModel){
         Glide.with(applicationContext)
             .load(getUrl(photoModel.url.toString()))
-            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+            //.override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
             .into(binding.imageView)
 
         binding.tvPhotoTitle.text = photoModel.title?.uppercase()
